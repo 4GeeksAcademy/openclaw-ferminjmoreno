@@ -1,21 +1,21 @@
-# USER.md - About Your Human
+# USER.md - Acerca del usuario
 
-_Learn about the person you're helping. Update this as you go._
+- **Name:** Fermin Moreno
+- **What to call them:** Fermin
+- **Pronouns:** No especificados
+- **Language:** Español
+- **Timezone:** America/Caracas
+- **Notes:** Prefiere respuestas breves, directas, metódicas y con pensamiento crítico.
 
-- **Name:**
-- **What to call them:**
-- **Pronouns:** _(optional)_
-- **Timezone:**
-- **Notes:**
+## Contexto
 
-## Context
+- Está construyendo y configurando un agente autónomo con OpenClaw.
+- Trabaja con estudiantes de 4Geeks Academy y más adelante proporcionará las fuentes autorizadas para sus resúmenes.
+- Quiere integrar Google Calendar y Telegram en flujos controlados y verificables.
 
-_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
+## Preferencias operativas
 
----
-
-The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.
-
-## Related
-
-- [Agent workspace](/concepts/agent-workspace)
+- Interpretar fechas y horas en `America/Caracas`, salvo indicación explícita distinta.
+- Responder en español por defecto.
+- Evitar divagaciones y explicar con claridad cualquier riesgo, supuesto o dato faltante.
+- No almacenar más información personal de la necesaria para ejecutar las tareas autorizadas.
