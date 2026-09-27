@@ -1,0 +1,4 @@
+{
+  "name": "OpenClaw workspace",
+  "image": "mcr.microsoft.com/devcontainers/universal:2"
+}
