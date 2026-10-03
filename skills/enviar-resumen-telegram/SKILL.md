@@ -1,87 +1,105 @@
 ---
 name: enviar-resumen-telegram
-description: "Prepara o envía un resumen por Telegram: reúne fuentes autorizadas, redacta un mensaje breve, confirma el destino y verifica el envío."
+description: "Sintetizar fuentes autorizadas y entregar un resumen a un chat de Telegram con verificación de entrega."
 ---
 
 # Enviar resumen por Telegram
 
-## 1. ¿Qué hace esta skill?
+Cuando el usuario pida preparar, hacer o enviar un resumen, reporte o
+actualización a Telegram. No enviar si el usuario solo pidió preparar.
 
-Cuando el usuario solicita preparar o enviar un resumen, sintetiza las fuentes autorizadas y entrega un único mensaje verificable al chat de Telegram indicado.
+Actívala ante peticiones como «envía mi resumen por Telegram», «manda el
+reporte diario» o «prepara el resumen para Telegram».
 
-Actívala ante peticiones como «envía mi resumen por Telegram», «manda el reporte diario» o «prepara el resumen para Telegram».
+No la uses para responder conversaciones en nombre del usuario, difundir
+contenido a varios chats ni acceder a fuentes no autorizadas.
 
-No la uses para responder conversaciones en nombre del usuario, difundir contenido a varios chats ni acceder a fuentes que el usuario no haya autorizado.
-
-## 2. ¿Qué input necesita el agente?
+## Input del usuario
 
 | Dato | Obligatorio | Formato | Fuente o valor por defecto |
 |---|---|---|---|
 | Contenido o fuentes | Sí | Texto, archivos, URLs o herramientas autorizadas | Usuario |
-| Periodo cubierto | Sí | Fechas o intervalo inequívoco | Usuario; puede ser «hoy» con zona configurada |
+| Período cubierto | Sí | Fechas o intervalo inequívoco | Usuario; «hoy» se resuelve con zona horaria de `USER.md` |
 | Destinatario | Sí para enviar | Alias o `chat_id` | `TOOLS.md`; preguntar si falta o hay varios |
 | Tipo de resumen | No | Diario, proyecto, reuniones o personalizado | Diario |
-| Secciones | No | Lista de encabezados | Logros, pendientes, bloqueos y próximos pasos |
-| Longitud | No | Breve, media o límite de caracteres | Breve, máximo 3500 caracteres |
+| Secciones | No | Lista de encabezados | Logros, pendientes, bloqueos, próximos pasos |
+| Longitud | No | Breve, media o límite de caracteres | Breve, máx. 3500 caracteres |
 | Tono | No | Directo, formal o personalizado | `SOUL.md` y `USER.md` |
 
 Antes de preguntar, consulta únicamente el contexto pertinente:
 
-- `AGENTS.md`: permisos para leer fuentes y realizar envíos externos.
-- `IDENTITY.md`: firma o identidad, solo si el usuario la ha configurado y solicitado.
-- `SOUL.md`: tono, privacidad y límites de representación.
-- `USER.md`: nombre, zona horaria, idioma y preferencias del resumen.
-- `TOOLS.md`: alias de Telegram, chats permitidos e integración disponible.
+- `AGENTS.md` → permisos para leer fuentes y realizar envíos externos
+- `IDENTITY.md` → firma o identidad si Fer la ha configurado
+- `SOUL.md` → tono, privacidad y límites de representación
+- `USER.md` → nombre, zona horaria, idioma y preferencias
+- `TOOLS.md` → alias de Telegram, chats autorizados, integración disponible
 
-No infieras un destinatario a partir de una conversación reciente. No incluyas secretos, credenciales, datos privados irrelevantes ni información de una fuente no autorizada.
+No infieras un destinatario a partir de conversaciones anteriores. No
+incluyas secretos, credenciales ni fuentes no autorizadas.
 
-Si falta contenido, periodo o destinatario, pregunta solo por lo necesario. Si el usuario pide únicamente preparar el resumen, el destinatario no es obligatorio y no debes enviar nada.
+Si falta contenido, período o destinatario, pregunta solo por lo necesario.
+Si el usuario pide únicamente preparar el resumen, el destinatario no es
+obligatorio y no debes enviar nada.
 
-## 3. ¿Cómo es un buen output?
+## Cómo enviar
 
-El mensaje debe ser legible en Telegram y usar esta estructura cuando las secciones tengan contenido:
+Usar la API de Telegram (`curl` a `api.telegram.org`). El token de bot está
+en `openclaw.json` → `channels.telegram.botToken`.
 
-```text
-Resumen — <periodo>
+El `chat_id` puede venir de:
+- `TOOLS.md` si tiene un alias configurado
+- El usuario da el número directamente
+- El username/nombre del chat (resolverlo con `getUpdates` o `getChat`)
 
-Logros
-- <resultado concreto>
+## Formato del resumen
 
-Pendientes
-- <acción y responsable, si se conoce>
+- Tono: profesional pero conversacional (guiarse por `SOUL.md`)
+- Máximo recomendado: **3500 caracteres** (límite Telegram: 4096)
+- Secciones sugeridas: logros, pendientes, bloqueos, próximos pasos
+- Incluir período y fecha del resumen
+- Omitir secciones vacías excepto bloqueos cuando convenga
 
-Bloqueos
-- <bloqueo o "Ninguno informado">
+## Flujo
 
-Próximos pasos
-- <acción concreta>
+1. **Determinar intención** — ¿preparar o enviar? No conviertas un borrador
+   en envío.
+2. **Verificar fuentes** — comprueba que son accesibles y están autorizadas.
+   Termina con lista de fuentes faltantes si no puedes leerlas.
+3. **Sintetizar** — solo hechos del período solicitado. No inventes avances,
+   responsables ni fechas.
+4. **Limitar longitud** — mantén bajo 3500 caracteres. Si no cabe, prepara
+   partes numeradas y avisa.
+5. **Resolver destinatario** — mediante alias exacto de `TOOLS.md` o
+   `chat_id` dado por el usuario. Si hay ambigüedad, pregunta.
+6. **Vista previa** — muestra y pide confirmación antes de enviar. Omite
+   este paso solo si hay autorización explícita en `AGENTS.md`/`USER.md`
+   para ese resumen periódico y destinatario.
+7. **Deduplicar** — construye clave: destinatario + tipo + período. Si ya se
+   envió, infórmalo y no repitas.
+8. **Enviar** — una sola vez vía Telegram. Conserva `chat_id` y
+   `message_id`.
+9. **Confirmar** — responde con destinatario, período y `message_id`.
+
+## Output exitoso
+
+```
+Resumen — 27 sep 2026
+Enviado a: startbot (chat_id: 6715028138)
+message_id: 149
 ```
 
-Para una preparación sin envío, devuelve la vista previa en el chat actual. Para un envío, el destino es el chat de Telegram confirmado y la respuesta debe incluir destinatario, periodo y `message_id` devuelto por Telegram.
+## Manejo de errores
 
-La ejecución funciona cuando la API o herramienta de mensajería confirma el `chat_id` y el `message_id`, y el contenido confirmado coincide con el enviado.
+- Si **falta el destinatario**: preguntar antes de enviar.
+- Si **Telegram rechaza el mensaje**: conservar el borrador, explicar el
+  error. No declarar que se envió.
+- Si **no hay integración de Telegram**: avisar y entregar borrador en el
+  chat actual.
+- Si **el resumen ya fue enviado**: informar y no repetir.
+- Si **el estado del envío es incierto**: no reintentar automáticamente.
 
-No declares éxito si solo preparaste el texto, si falta la integración o si Telegram no confirmó el mensaje. Indica claramente «borrador no enviado» o el error recibido.
+## Notas
 
-## Procedimiento
-
-1. Determina si el usuario pidió preparar o enviar. No conviertas una petición de borrador en un envío.
-2. Comprueba que las fuentes solicitadas son accesibles y están autorizadas. Termina con una lista de fuentes faltantes si no puedes leerlas.
-3. Reúne solo hechos comprendidos en el periodo solicitado y conserva referencias internas suficientes para comprobarlos.
-4. Redacta el resumen sin inventar avances, responsables ni fechas. Omite secciones vacías, excepto bloqueos cuando convenga confirmar que no se informaron.
-5. Mantén el mensaje por debajo de 3500 caracteres. Si no cabe, prepara varias partes numeradas y avisa antes del envío.
-6. Resuelve el destinatario mediante el alias exacto de `TOOLS.md` o un `chat_id` dado por el usuario. Si hay ambigüedad, pregunta.
-7. Muestra la vista previa y solicita confirmación antes de enviar. Omite esta confirmación solo si `AGENTS.md` o `USER.md` autoriza explícitamente ese resumen periódico y ese destinatario.
-8. Construye una clave de deduplicación con destinatario, tipo de resumen y periodo. Comprueba si ya se envió antes de continuar.
-9. Envía una sola vez mediante la herramienta de Telegram disponible y conserva el identificador de respuesta.
-10. Devuelve la confirmación definida. Si el estado del envío es incierto, no reintentes automáticamente.
-
-## Casos de aceptación
-
-| Caso | Entrada | Resultado esperado |
-|---|---|---|
-| Normal | Fuentes, periodo y chat válidos | Envía una vez y devuelve `message_id` |
-| Solo borrador | Fuentes y periodo, sin orden de envío | Muestra la vista previa y no usa Telegram |
-| Incompleto | Falta el destinatario para un envío | Pregunta por él y no envía |
-| Duplicado | El mismo resumen ya fue enviado | Informa el envío existente y no repite |
-| Fallo externo | Telegram rechaza el mensaje | Informa el error y conserva el borrador |
+- No inferir el destinatario de conversaciones anteriores.
+- No incluir secretos, contraseñas ni fuentes no autorizadas.
+- Respetar el máximo de 4096 caracteres de Telegram.

@@ -1,31 +1,34 @@
-# USER.md - Acerca del usuario
+# USER.md — Acerca de mi humano
 
-- **Name:** Fermin Moreno
-- **What to call them:** Fermin
-- **Pronouns:** No especificados
+- **Name:** Fer
+- **Pronouns:** —
 - **Language:** Español
 - **Timezone:** America/Caracas
-- **Notes:** Prefiere respuestas breves, directas, metódicas y con pensamiento crítico.
+- **What to call them:** Fer
+- **Notes:** Primer contacto el 24 de agosto de 2026. Me bautizó como Neo. Prefiere respuestas breves, directas, metódicas y con pensamiento crítico.
+
+## Rol
+
+Fer es mi humano, el que me diseñó y bautizó. Soy su asistente personal de código y tareas. Está construyendo y configurando un agente autónomo con OpenClaw.
 
 ## Contexto
 
-- Está construyendo y configurando un agente autónomo con OpenClaw.
-- Trabaja con estudiantes de 4Geeks Academy y más adelante proporcionará las fuentes autorizadas para sus resúmenes.
-- Quiere integrar Google Calendar y Telegram en flujos controlados y verificables.
+- **Bootcamp AI Engineering:** Cursando, meta de certificación marzo 2027.
+- **Proyectos:** Dando forma a proyectos digitales con meta de convertirlos en actividad de negocio a largo plazo.
+- **Contenido deportivo:** Gestiona contenido deportivo, especialmente béisbol.
+- **4Geeks Academy:** Trabaja con estudiantes; más adelante proporcionará las fuentes autorizadas para resúmenes.
+- **Integraciones:** Quiere integrar Google Calendar y Telegram en flujos controlados y verificables.
 
 ## Perfil profesional
 
-- Es administrador de bases de datos (DBA).
-- Gestiona contenido deportivo, especialmente sobre béisbol.
-- Cursa un bootcamp de AI Engineering y quiere obtener la certificación a más tardar en marzo de 2027.
-- Está dando forma a proyectos digitales con la meta de convertirlos en una actividad de negocio a largo plazo.
+- **Rol principal:** Administrador de Bases de Datos (DBA).
 
-## Intereses
+## Intereses y hobbies
 
-- Practica natación de forma intensa, boxeo recreativo y entrenamiento de gimnasio.
-- Está aprendiendo a tocar guitarra y aprende canciones en inglés.
-- Quiere aprender un segundo idioma y considera estudiar un tercero más adelante.
-- Disfruta leer y escribir con frecuencia.
+- **Deporte:** Natación intensa, juega béisbol, boxeo recreativo y entrenamiento de gimnasio.
+- **Música:** Aprendiendo a tocar guitarra y canciones en inglés.
+- **Idiomas:** Aprendiendo un segundo idioma; considera un tercero más adelante.
+- **Lectura y escritura:** Disfruta ambas con frecuencia.
 
 ## Preferencias operativas
 
@@ -34,5 +37,9 @@
 - Evitar divagaciones y explicar con claridad cualquier riesgo, supuesto o dato faltante.
 - Comunicar brevemente qué se está haciendo durante una tarea.
 - Favorecer explicaciones visuales mediante diagramas, gráficos o imágenes cuando aporten claridad.
-- Documentar cada tarea con un resumen del objetivo, prompt, decisiones, cambios, resultado y pendientes.
+- Documentar cada tarea con resumen del objetivo, decisiones, cambios, resultado y pendientes.
 - No almacenar más información personal de la necesaria para ejecutar las tareas autorizadas.
+
+---
+
+*Última actualización: 3 oct 2026 — Fusión de perfiles y preferencias.*
